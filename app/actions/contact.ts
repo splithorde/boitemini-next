@@ -1,14 +1,11 @@
-'use server';
-import { contactSchema } from '@/lib/zod-schemas';
+"use server";
+import { prisma } from '@/lib/prisma';
+import { ContactSchema } from '@/lib/zod-schemas';
 import { transporter } from '@/lib/nodemailer';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 export async function submitContact(prevState: any, formData: FormData) {
-  const data = Object.fromEntries(formData.entries());
-  const validation = contactSchema.safeParse(data);
-
+  const data = Object.fromEntries(formData);
+  const validation = ContactSchema.safeParse(data);
   if (!validation.success) return { success: false, errors: validation.error.flatten().fieldErrors };
 
   try {
@@ -16,11 +13,11 @@ export async function submitContact(prevState: any, formData: FormData) {
     await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: process.env.EMAIL_RECIPIENT,
-      subject: 'Nouveau message contact Garage',
-      html: `<h1>Nouveau contact</h1><pre>${JSON.stringify(validation.data, null, 2)}</pre>`
+      subject: 'Nouveau message de contact',
+      html: `<p>Message reçu de ${validation.data.name}</p>`
     });
     return { success: true };
   } catch (e) {
-    return { success: false, message: 'Erreur serveur' };
+    return { success: false, message: "Erreur serveur" };
   }
 }
