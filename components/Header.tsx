@@ -2,19 +2,16 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-blue-600">
+    <header className="bg-blue-600 text-white p-4 shadow-md">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link href="/" className="text-2xl font-bold">
           BoiteMini
         </Link>
-        <nav className="flex space-x-4">
-          <Link href="/" className="text-gray-600 hover:text-blue-600">
-            Accueil
-          </Link>
-          <Link href="/services" className="text-gray-600 hover:text-blue-600">
+        <nav className="space-x-6">
+          <Link href="/services" className="hover:text-blue-200 transition-colors">
             Services
           </Link>
-          <Link href="/contact" className="text-gray-600 hover:text-blue-600">
+          <Link href="/contact" className="hover:text-blue-200 transition-colors">
             Contact
           </Link>
         </nav>
