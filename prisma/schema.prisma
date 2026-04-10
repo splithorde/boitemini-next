@@ -2,13 +2,13 @@ generator client { provider = "prisma-client-js" }
 datasource db { provider = "postgresql" url = env("DATABASE_URL") }
 
 model ContactSubmission {
-  id        String   @id @default(cuid())
-  nom       String
+  id        String   @id @default(uuid())
+  name      String
   email     String
-  telephone String?
-  vehicule  String?
-  carburant String?
-  miseEnCirculation String?
+  phone     String?
+  vehicle   String?
+  fuel      String
+  date      String?
   message   String
   createdAt DateTime @default(now())
 }
