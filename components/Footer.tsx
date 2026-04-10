@@ -3,14 +3,14 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-400 py-16">
-      <div className="container grid md:grid-cols-2 gap-8">
+      <div className="container grid md:grid-cols-2 gap-8 items-center">
         <div>
-          <h3 className="text-white font-bold mb-4">Garage BoiteMini</h3>
-          <p className="text-sm">Expertise et précision mécanique. Votre sécurité est notre priorité.</p>
+          <h4 className="text-white font-bold mb-2">Garage BoiteMini</h4>
+          <p className="text-sm">Expertise et précision au service de votre mécanique.</p>
         </div>
-        <div className="flex flex-col items-start md:items-end justify-between">
-          <Link href="/mentions-legales" className="text-xs hover:text-white transition-colors">Mentions Légales</Link>
-          <p className="text-xs mt-4 md:mt-0">© {new Date().getFullYear()} BoiteMini. Tous droits réservés.</p>
+        <div className="md:text-right text-xs uppercase tracking-widest space-x-6">
+          <Link href="/mentions-legales" className="hover:text-white transition-colors">Mentions Légales</Link>
+          <span>© {new Date().getFullYear()}</span>
         </div>
       </div>
     </footer>
