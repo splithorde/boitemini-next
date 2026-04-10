@@ -2,29 +2,20 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="container py-24 flex flex-col items-center text-center">
-      <div className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-wider text-accent uppercase bg-rose-50 rounded-full">
-        Expertise mécanique
-      </div>
-      <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
-        Votre garage <br />
-        <span className="text-accent">de confiance</span>
+    <div className="flex flex-col items-center justify-center flex-grow py-20 px-6 text-center">
+      <span className="text-indigo-600 font-semibold tracking-wide uppercase text-sm mb-4">Expertise Automobile</span>
+      <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 max-w-4xl">
+        La maintenance de précision pour votre véhicule
       </h1>
-      <p className="text-xl text-slate-600 max-w-lg mb-12">
-        Entretien rigoureux, réparations fiables et diagnostic précis. Nous prenons soin de votre véhicule comme si c'était le nôtre.
+      <p className="text-xl text-slate-600 mb-12 max-w-2xl">
+        Garage BoiteMini vous accueille pour tous vos besoins en entretien, révision et réparation avec un service professionnel et transparent.
       </p>
       <div className="flex gap-4">
-        <Link 
-          href="/contact" 
-          className="bg-accent text-white px-8 py-4 rounded-full font-semibold hover:bg-rose-700 transition-all shadow-lg shadow-rose-200"
-        >
-          Demander un devis
+        <Link href="/contact" className="bg-indigo-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-all">
+          Prendre rendez-vous
         </Link>
-        <Link 
-          href="/services" 
-          className="bg-white border border-slate-200 px-8 py-4 rounded-full font-semibold hover:bg-slate-50 transition-all"
-        >
-          Voir nos services
+        <Link href="/services" className="bg-slate-100 text-slate-900 px-8 py-4 rounded-lg font-semibold hover:bg-slate-200 transition-all">
+          Nos services
         </Link>
       </div>
     </div>
