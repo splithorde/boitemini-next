@@ -8,9 +8,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        slate: { 850: '#1e293b' },
-        accent: '#EAB308', // Hazard Yellow
+        slate: {
+          900: '#1e293b',
+          800: '#334155',
+        },
+        accent: {
+          DEFAULT: '#e11d48', // High-contrast red for professional impact
+        }
       },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      }
     },
   },
   plugins: [],
