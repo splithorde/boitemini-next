@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased font-sans;
-}
-
-h1, h2, h3 {
-  @apply font-bold tracking-tight text-slate-900;
+  @apply bg-white text-slate-900 antialiased font-sans selection:bg-amber-100;
 }
 
 .container {
-  @apply max-w-6xl mx-auto px-6;
+  @apply max-w-7xl mx-auto px-6;
+}
+
+h1, h2, h3 {
+  @apply tracking-tight;
 }
