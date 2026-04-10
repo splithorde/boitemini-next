@@ -2,20 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-slate-50 text-zinc-800 antialiased selection:bg-amber-500/30;
-  }
-  h1, h2, h3 {
-    @apply font-semibold tracking-tight text-zinc-900;
-  }
+body {
+  @apply bg-slate-50 text-slate-900 antialiased font-sans selection:bg-amber-500 selection:text-white;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-amber-500 text-white px-6 py-3 font-semibold hover:bg-amber-600 transition-all rounded-sm;
-  }
-  .btn-secondary {
-    @apply border-2 border-zinc-900 text-zinc-900 px-6 py-3 font-semibold hover:bg-zinc-900 hover:text-white transition-all rounded-sm;
-  }
+h1, h2, h3 {
+  @apply font-bold tracking-tight text-slate-900;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-6;
 }
