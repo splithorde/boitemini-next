@@ -5,15 +5,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        slate: {
-          900: '#0f172a',
-          800: '#1e293b',
-          700: '#334155',
-        },
-        amber: {
-          500: '#d97706',
-          600: '#b45309',
-        },
+        slate: { 50: '#f8fafc', 900: '#0f172a' },
+        zinc: { 800: '#27272a', 900: '#18181b' },
+        amber: { 500: '#d97706' },
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
