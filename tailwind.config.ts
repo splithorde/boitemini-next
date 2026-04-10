@@ -9,16 +9,14 @@ const config: Config = {
     extend: {
       colors: {
         slate: {
-          900: '#1e293b',
-          800: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
         },
-        accent: {
-          DEFAULT: '#e11d48', // High-contrast red for professional impact
+        indigo: {
+          600: '#4f46e5',
+          700: '#4338ca',
         }
       },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-      }
     },
   },
   plugins: [],
