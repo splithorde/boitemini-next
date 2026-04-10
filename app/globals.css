@@ -3,11 +3,9 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white text-slate-900 antialiased selection:bg-rose-100;
+  @apply bg-white text-slate-900 antialiased font-sans;
 }
 
-@layer components {
-  .container {
-    @apply max-w-5xl mx-auto px-6;
-  }
+h1, h2, h3 {
+  @apply font-bold tracking-tight;
 }
