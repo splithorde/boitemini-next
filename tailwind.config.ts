@@ -6,7 +6,17 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        slate: {
+          900: '#1e293b',
+          800: '#334155',
+        },
+        amber: {
+          500: '#f59e0b',
+        },
+      },
+    },
   },
   plugins: [],
 };
