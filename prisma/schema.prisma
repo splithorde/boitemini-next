@@ -6,9 +6,9 @@ model ContactSubmission {
   name      String
   email     String
   phone     String?
-  vehicle   String?
+  vehicle   String
   fuel      String
-  date      String?
+  date      String
   message   String
   createdAt DateTime @default(now())
 }
