@@ -1,8 +1,8 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold text-blue-600">Bienvenue chez BoiteMini</h1>
-      <p className="mt-4 text-xl">Le site vitrine est en cours de construction.</p>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-white">
+      <h1 className="text-5xl font-bold text-slate-900">Hello World</h1>
+      <p className="mt-4 text-xl text-slate-600">Bienvenue sur le futur site de BoiteMini.</p>
     </main>
   );
 }
