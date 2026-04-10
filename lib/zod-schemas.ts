@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
 export const ContactSchema = z.object({
-  name: z.string().min(2, "Le nom est obligatoire"),
+  nom: z.string().min(2, "Le nom est requis"),
   email: z.string().email("Email invalide"),
-  phone: z.string().optional(),
-  vehicle: z.string().optional(),
-  fuelType: z.enum(["Essence", "Diesel", "Hybrid", "Electrique"]),
-  regDate: z.string().optional(),
-  message: z.string().min(10, "Le message doit contenir au moins 10 caractères")
+  telephone: z.string().optional(),
+  vehicule: z.string().min(3, "Marque et modèle requis"),
+  carburant: z.enum(["Essence", "Diesel", "Hybrid", "Electrique"]),
+  dateMiseCirculation: z.string().min(4, "Date requise"),
+  message: z.string().min(10, "Message trop court")
 });
