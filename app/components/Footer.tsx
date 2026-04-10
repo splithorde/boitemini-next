@@ -1,16 +1,9 @@
-'use client';
-import { useEffect, useState } from 'react';
-
 export default function Footer() {
-  const [year, setYear] = useState<number | null>(null);
-
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
-
   return (
-    <footer className="p-4 text-center text-sm text-gray-500">
-      © {year || ''} BoiteMini. Tous droits réservés.
+    <footer className="bg-gray-900 text-gray-300 py-8 text-center mt-auto">
+      <div className="container mx-auto px-4">
+        <p>&copy; 2024 Garage BoiteMini. Tous droits réservés.</p>
+      </div>
     </footer>
   );
 }
