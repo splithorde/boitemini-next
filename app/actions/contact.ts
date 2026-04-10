@@ -1,27 +1,20 @@
-"use server"
-import { prisma } from '@/lib/prisma';
+"use server";
 import { ContactSchema } from '@/lib/zod-schemas';
-import nodemailer from 'nodemailer';
+import { prisma } from '@/lib/prisma'; // Assumes client is exported here
+import { transporter } from '@/lib/nodemailer';
 
-export async function submitContact(prevState: any, formData: FormData) {
-  const data = Object.fromEntries(formData.entries());
+export async function submitContact(data: any) {
   const result = ContactSchema.safeParse(data);
+  if (!result.success) return { success: false, error: "Validation failed" };
 
-  if (!result.success) return { success: false, errors: result.error.flatten().fieldErrors };
+  await prisma.contactSubmission.create({ data: result.data });
+  
+  await transporter.sendMail({
+    from: process.env.SMTP_USER,
+    to: process.env.EMAIL_RECIPIENT,
+    subject: `Nouveau contact de ${result.data.nom}`,
+    html: `<p>Détails: ${JSON.stringify(result.data)}</p>`
+  });
 
-  try {
-    await prisma.contactSubmission.create({ data: result.data });
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-    });
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: process.env.EMAIL_RECIPIENT,
-      subject: "Nouveau message garage",
-      html: `<pre>${JSON.stringify(result.data, null, 2)}</pre>`
-    });
-    return { success: true };
-  } catch { return { success: false, message: "Erreur serveur" }; }
+  return { success: true };
 }
