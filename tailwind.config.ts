@@ -9,13 +9,12 @@ const config: Config = {
     extend: {
       colors: {
         slate: {
-          800: '#1e293b',
-          900: '#0f172a',
+          900: '#1e293b',
+          800: '#334155',
         },
-        indigo: {
-          600: '#4f46e5',
-          700: '#4338ca',
-        }
+        amber: {
+          500: '#f59e0b',
+        },
       },
     },
   },
