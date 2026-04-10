@@ -3,12 +3,12 @@ datasource db { provider = "postgresql" url = env("DATABASE_URL") }
 
 model ContactSubmission {
   id        String   @id @default(uuid())
-  name      String
+  nom       String
   email     String
-  phone     String?
-  vehicle   String?
-  fuelType  String
-  regDate   String?
+  telephone String?
+  vehicule  String
+  carburant String
+  dateMiseCirculation String
   message   String
   createdAt DateTime @default(now())
 }
