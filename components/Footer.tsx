@@ -1,13 +1,13 @@
-import Link from 'next/link';
-
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-400 py-12">
+    <footer className="bg-zinc-900 text-zinc-400 py-16">
       <div className="container mx-auto px-6 text-center">
-        <p className="text-sm uppercase tracking-wider mb-4">© {new Date().getFullYear()} Garage BoiteMini. Tous droits réservés.</p>
-        <Link href="/mentions-legales" className="text-xs hover:text-white transition-colors underline decoration-slate-600">
-          Mentions Légales
-        </Link>
+        <div className="mb-8 font-bold text-white uppercase tracking-widest">BoiteMini</div>
+        <p className="text-sm mb-8">© {new Date().getFullYear()} Garage BoiteMini. Services de maintenance automobile haut de gamme.</p>
+        <nav className="flex gap-6 justify-center text-xs underline">
+          <a href="/mentions-legales">Mentions Légales</a>
+          <a href="/contact">Contact</a>
+        </nav>
       </div>
     </footer>
   );
