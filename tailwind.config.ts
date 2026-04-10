@@ -9,12 +9,16 @@ const config: Config = {
     extend: {
       colors: {
         slate: {
-          900: '#1e293b',
-          800: '#334155',
+          50: '#f8fafc',
+          900: '#0f172a',
+          800: '#1e293b',
         },
         amber: {
-          500: '#f59e0b',
+          500: '#d97706',
         },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
       },
     },
   },
