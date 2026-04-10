@@ -1,13 +1,20 @@
+import Link from 'next/link';
+
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200 mt-auto">
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-gray-500 text-sm">
-          &copy; {new Date().getFullYear()} BoiteMini. Tous droits réservés.
+    <footer className="bg-gray-800 text-white py-8 mt-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="mb-4 md:mb-0">
+          <span className="text-xl font-bold">BoiteMini</span>
+          <p className="text-gray-400 text-sm mt-1">L'expertise automobile à votre service.</p>
         </div>
-        <div className="mt-4 md:mt-0 flex space-x-6 text-sm text-gray-500">
-          <a href="#" className="hover:text-blue-600 transition-colors">Mentions légales</a>
-          <a href="#" className="hover:text-blue-600 transition-colors">Politique de confidentialité</a>
+        <div className="flex space-x-6 text-sm">
+          <Link href="/mentions-legales" className="text-gray-400 hover:text-white transition-colors">
+            Mentions Légales
+          </Link>
+          <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+            Contact
+          </Link>
         </div>
       </div>
     </footer>
