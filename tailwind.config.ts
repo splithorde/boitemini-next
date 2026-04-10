@@ -5,11 +5,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['var(--font-inter)'],
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };
