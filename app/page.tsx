@@ -1,15 +1,19 @@
 export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center flex-1 text-center">
-      <h1 className="text-4xl md:text-5xl font-bold text-blue-600 mb-6">
-        Bienvenue chez BoiteMini
-      </h1>
-      <p className="text-xl md:text-2xl text-gray-700 max-w-2xl">
-        Votre garage automobile de confiance.
+    <div className="flex flex-col items-center justify-center h-full text-center space-y-6 py-12">
+      <div className="inline-block bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+        Nouveau Site Web
+      </div>
+      <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight">
+        Hello World !
+      </h2>
+      <p className="text-xl md:text-2xl text-gray-600 max-w-2xl leading-relaxed">
+        Bienvenue sur la future vitrine digitale du garage <span className="font-bold text-blue-700">BoiteMini</span>.
       </p>
-      <p className="mt-4 text-lg text-gray-500">
-        Notre site web est actuellement en cours de construction. Revenez bientôt !
+      <div className="w-24 h-1 bg-blue-600 rounded mt-8"></div>
+      <p className="text-lg text-gray-500 mt-8">
+        Notre site est en cours de construction pour vous offrir la meilleure expérience.
       </p>
-    </section>
+    </div>
   );
 }
