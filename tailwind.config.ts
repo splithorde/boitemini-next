@@ -8,14 +8,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        slate: {
-          800: '#1e293b',
-          900: '#0f172a',
-        },
-        accent: {
-          blue: '#2563eb',
-        }
-      }
+        slate: { 850: '#1e293b' },
+        accent: '#EAB308', // Hazard Yellow
+      },
     },
   },
   plugins: [],
