@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
+export const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.orange.fr',
   port: Number(process.env.SMTP_PORT) || 465,
   secure: true,
   auth: {
@@ -9,5 +9,3 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
 });
-
-export default transporter;
