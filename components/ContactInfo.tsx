@@ -8,29 +8,30 @@ const CONTACT_DETAILS = {
 
 export default function ContactInfo() {
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col">
-        <h2 className="font-bold text-xl text-brand-800 mb-3 uppercase tracking-wider text-sm">Adresse postale</h2>
-        <div className="text-gray-600 space-y-1">
+    <div className="space-y-8 text-gray-700 bg-white p-8 rounded-xl shadow-lg">
+      <div>
+        <h2 className="font-bold text-xl text-brand-800 mb-4 flex items-center">
+          <span className="mr-2 text-accent-500">📍</span> Adresse postale
+        </h2>
+        <div className="space-y-1">
           {CONTACT_DETAILS.addressLines.map((line, index) => (
-            <p key={index} className="block">{line}</p>
+            <p key={index} className="text-lg">{line}</p>
           ))}
         </div>
       </div>
       
-      <div className="flex flex-col">
-        <h2 className="font-bold text-xl text-brand-800 mb-3 uppercase tracking-wider text-sm">Téléphone</h2>
-        <p className="text-brand-600 font-semibold text-lg">{CONTACT_DETAILS.phone}</p>
+      <div>
+        <h2 className="font-bold text-xl text-brand-800 mb-4 flex items-center">
+          <span className="mr-2 text-accent-500">📞</span> Téléphone
+        </h2>
+        <p className="text-lg">{CONTACT_DETAILS.phone}</p>
       </div>
-
-      <div className="flex flex-col">
-        <h2 className="font-bold text-xl text-brand-800 mb-3 uppercase tracking-wider text-sm">Email</h2>
-        <a 
-          href={`mailto:${CONTACT_DETAILS.email}`} 
-          className="text-brand-600 hover:underline font-semibold"
-        >
-          {CONTACT_DETAILS.email}
-        </a>
+      
+      <div>
+        <h2 className="font-bold text-xl text-brand-800 mb-4 flex items-center">
+          <span className="mr-2 text-accent-500">✉️</span> Email
+        </h2>
+        <a href={`mailto:${CONTACT_DETAILS.email}`} className="text-lg text-brand-600 hover:underline">{CONTACT_DETAILS.email}</a>
       </div>
     </div>
   );
