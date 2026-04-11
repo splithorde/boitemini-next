@@ -4,27 +4,34 @@ import ContactMap from '@/components/ContactMap';
 
 export default function Contact() {
   return (
-    <main className="bg-gray-50 min-h-screen">
-      <div className="container mx-auto px-6 py-16">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-brand-800 mb-4">
-            Contactez notre garage
-          </h1>
-          <p className="text-lg text-gray-600">
-            Une question ? Un devis ? Notre équipe est à votre écoute pour vous accompagner dans l'entretien de votre véhicule.
-          </p>
+    <div className="container mx-auto px-6 py-12 flex-grow">
+      <header className="text-center mb-16">
+        <h1 className="text-4xl font-extrabold text-brand-800 mb-4">Contactez-nous</h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Notre équipe est à votre écoute pour toute question concernant l'entretien de votre véhicule ou pour prendre rendez-vous.
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="space-y-12">
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Envoyez-nous un message</h2>
+            <ContactForm />
+          </section>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-1 space-y-12">
+        <div className="space-y-12">
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h2>
             <ContactInfo />
+          </section>
+          
+          <section>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Nous trouver</h2>
             <ContactMap />
-          </div>
-          <div className="lg:col-span-2">
-            <ContactForm />
-          </div>
+          </section>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
