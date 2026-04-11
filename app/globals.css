@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
 body {
-  @apply bg-slate-50 text-slate-900 antialiased font-sans selection:bg-amber-500 selection:text-white;
-}
-
-h1, h2, h3 {
-  @apply font-bold tracking-tight text-slate-900;
-}
-
-.container {
-  @apply max-w-7xl mx-auto px-6;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
 }

@@ -1,17 +1,27 @@
 import ContactInfo from '@/components/ContactInfo';
+import ContactForm from '@/components/ContactForm';
+import ContactMap from '@/components/ContactMap';
 
 export default function Contact() {
   return (
-    <div className="container mx-auto px-6 py-16 flex-grow">
-      <h1 className="text-4xl font-bold text-blue-600 mb-12 text-center">Nous Contacter</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div className="flex flex-col justify-center">
-          <p className="text-lg text-gray-700">
-            Vous souhaitez en savoir plus sur nos services ? N'hésitez pas à nous contacter via les coordonnées ci-dessous.
+    <div className="bg-gray-50 min-h-screen">
+      <div className="container mx-auto px-6 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-brand-800 mb-4">Contactez-nous</h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Une question sur une réparation ? Un devis pour votre véhicule ? Notre équipe est à votre écoute.
           </p>
         </div>
-        <div className="w-full">
-          <ContactInfo />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="space-y-8">
+            <ContactInfo />
+            <ContactMap />
+          </div>
+          
+          <div>
+            <ContactForm />
+          </div>
         </div>
       </div>
     </div>
