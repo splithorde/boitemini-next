@@ -1,25 +1,31 @@
 {
-  "name": "boitemini-garage",
+  "name": "boitemini-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
-    "next": "14.1.0",
-    "react": "^18",
-    "react-dom": "^18"
+    "@prisma/client": "^5.0.0",
+    "next": "15.0.0",
+    "nodemailer": "^6.9.7",
+    "react": "19.0.0-rc-6632edcf-20241024",
+    "react-dom": "19.0.0-rc-6632edcf-20241024",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "^20.0.0",
+    "@types/nodemailer": "^6.4.14",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.0.1",
-    "postcss": "^8",
+    "postcss": "^8.4.1",
+    "prisma": "^5.0.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5.0.0"
   }
 }
