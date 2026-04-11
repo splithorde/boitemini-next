@@ -15,6 +15,6 @@ model ContactSubmission {
   brandModel       String?
   fuelType         String?
   registrationDate DateTime?
-  message          String   @db.Text
+  message          String
   createdAt        DateTime @default(now())
 }
