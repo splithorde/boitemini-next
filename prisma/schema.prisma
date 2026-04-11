@@ -8,13 +8,13 @@ datasource db {
 }
 
 model ContactSubmission {
-  id              String   @id @default(cuid())
-  customerName    String
-  customerEmail   String
-  customerPhone   String?
-  vehicleBrand    String?
-  fuelType        String?
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String?
+  brandModel       String?
+  fuelType         String?
   registrationDate DateTime?
-  message         String
-  createdAt       DateTime @default(now())
+  message          String   @db.Text
+  createdAt        DateTime @default(now())
 }
