@@ -1,20 +1,16 @@
-import React from 'react';
-
 export default function ContactMap() {
   return (
-    <div className="w-full h-[400px] bg-gray-200 rounded-lg overflow-hidden relative border border-gray-300">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <p className="text-gray-500 font-medium italic">Carte interactive (Nanterre, France)</p>
+    <div className="w-full h-80 bg-gray-200 rounded-xl overflow-hidden shadow-inner flex items-center justify-center border border-gray-100">
+      <div className="text-center p-6">
+        <div className="w-12 h-12 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <p className="text-gray-600 font-medium">25bis Rue Georges Bizet, 92000 Nanterre</p>
+        <p className="text-gray-400 text-sm mt-2">Carte interactive bientôt disponible</p>
       </div>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2623.123456789012!2d2.21!3d48.89!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66487e070b435%3A0x679632c453676880!2sNanterre!5e0!3m2!1sfr!2sfr!4v1625000000000!5m2!1sfr!2sfr"
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        allowFullScreen={true}
-        loading="lazy"
-        title="Localisation Garage"
-      ></iframe>
     </div>
   );
 }
