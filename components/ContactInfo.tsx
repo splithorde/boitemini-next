@@ -1,36 +1,36 @@
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import React from 'react';
+
+const CONTACT_DETAILS = {
+  addressLines: ["BoiteMini", "25bis Rue Georges Bizet", "92000 Nanterre"],
+  phone: "+33 6 73 12 26 85",
+  email: "contact@boitemini.fr",
+};
 
 export default function ContactInfo() {
   return (
-    <div className="space-y-6">
-      <div className="flex items-start space-x-4">
-        <MapPin className="w-6 h-6 text-brand-600 mt-1" />
-        <div>
-          <h3 className="font-semibold text-gray-900">Adresse</h3>
-          <p className="text-gray-600">25bis Rue Georges Bizet, 92000 Nanterre</p>
+    <div className="space-y-8">
+      <div className="flex flex-col">
+        <h2 className="font-bold text-xl text-brand-800 mb-3 uppercase tracking-wider text-sm">Adresse postale</h2>
+        <div className="text-gray-600 space-y-1">
+          {CONTACT_DETAILS.addressLines.map((line, index) => (
+            <p key={index} className="block">{line}</p>
+          ))}
         </div>
       </div>
-      <div className="flex items-start space-x-4">
-        <Phone className="w-6 h-6 text-brand-600 mt-1" />
-        <div>
-          <h3 className="font-semibold text-gray-900">Téléphone</h3>
-          <p className="text-gray-600">01 47 24 60 48</p>
-        </div>
+      
+      <div className="flex flex-col">
+        <h2 className="font-bold text-xl text-brand-800 mb-3 uppercase tracking-wider text-sm">Téléphone</h2>
+        <p className="text-brand-600 font-semibold text-lg">{CONTACT_DETAILS.phone}</p>
       </div>
-      <div className="flex items-start space-x-4">
-        <Mail className="w-6 h-6 text-brand-600 mt-1" />
-        <div>
-          <h3 className="font-semibold text-gray-900">Email</h3>
-          <p className="text-gray-600">contact@boitemini.fr</p>
-        </div>
-      </div>
-      <div className="flex items-start space-x-4">
-        <Clock className="w-6 h-6 text-brand-600 mt-1" />
-        <div>
-          <h3 className="font-semibold text-gray-900">Horaires</h3>
-          <p className="text-gray-600">Lundi - Vendredi: 9h00 - 18h00</p>
-          <p className="text-gray-600">Samedi: Sur rendez-vous</p>
-        </div>
+
+      <div className="flex flex-col">
+        <h2 className="font-bold text-xl text-brand-800 mb-3 uppercase tracking-wider text-sm">Email</h2>
+        <a 
+          href={`mailto:${CONTACT_DETAILS.email}`} 
+          className="text-brand-600 hover:underline font-semibold"
+        >
+          {CONTACT_DETAILS.email}
+        </a>
       </div>
     </div>
   );
