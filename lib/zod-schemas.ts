@@ -1,15 +1,13 @@
 import { z } from 'zod';
 
-export const FuelTypeEnum = z.enum(["Essence", "Diesel", "Hybrid", "Electrique"]);
-
 export const ContactSchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-  email: z.string().email("Adresse email invalide"),
+  name: z.string().min(2, "Le nom est obligatoire"),
+  email: z.string().email("L'adresse mail est obligatoire et doit être valide"),
   phone: z.string().optional(),
-  carBrandModel: z.string().optional(),
-  fuel: z.union([FuelTypeEnum, z.literal("")]).optional(),
-  registrationDate: z.string().optional(),
-  message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
+  carModel: z.string().optional(),
+  fuelType: z.enum(['Essence', 'Diesel', 'Hybrid', 'Electrique', '']).optional(),
+  regDate: z.string().optional(),
+  message: z.string().min(10, "Le message est obligatoire (min. 10 caractères)"),
 });
 
 export type ContactFormData = z.infer<typeof ContactSchema>;
