@@ -2,40 +2,50 @@
 
 import { prisma } from "@/lib/prisma";
 import { contactSchema } from "@/lib/zod-schemas";
-import { sendContactEmail } from "@/lib/nodemailer";
+import { transporter } from "@/lib/nodemailer";
 
-export async function submitContact(prevState: any, formData: FormData) {
-  const rawData = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    phone: formData.get("phone"),
-    brandModel: formData.get("brandModel"),
-    fuelType: formData.get("fuelType"),
-    registrationDate: formData.get("registrationDate"),
-    message: formData.get("message"),
-  };
-
-  const validated = contactSchema.safeParse(rawData);
-
-  if (!validated.success) {
-    return { 
-      success: false, 
-      errors: validated.error.flatten().fieldErrors 
-    };
-  }
-
+export async function submitContactForm(formData: FormData) {
   try {
+    const rawData = Object.fromEntries(formData.entries());
+    const validated = contactSchema.parse(rawData);
+
     // 1. Save to Database
-    await prisma.contactSubmission.create({
-      data: validated.data,
+    const submission = await prisma.contactSubmission.create({
+      data: {
+        ...validated,
+        registrationDate: validated.registrationDate ? new Date(validated.registrationDate) : null,
+      },
     });
 
     // 2. Send Email
-    await sendContactEmail(validated.data);
+    const mailOptions = {
+      from: process.env.SMTP_USER,
+      to: process.env.EMAIL_RECIPIENT || 'kbertrand512@gmail.com',
+      subject: `Nouveau message contact de ${validated.name}`,
+      html: `
+        <div style="font-family: sans-serif; line-height: 1.5; color: #333;">
+          <h2 style="color: #1e40af;">Nouvelle demande de contact</h2>
+          <p><strong>Client :</strong> ${validated.name}</p>
+          <p><strong>Email :</strong> ${validated.email}</p>
+          <p><strong>Téléphone :</strong> ${validated.phone || 'Non renseigné'}</p>
+          <hr />
+          <p><strong>Véhicule :</strong> ${validated.brandModel || 'Non renseigné'}</p>
+          <p><strong>Carburant :</strong> ${validated.fuelType || 'Non renseigné'}</p>
+          <p><strong>Mise en circulation :</strong> ${validated.registrationDate || 'Non renseignée'}</p>
+          <hr />
+          <p><strong>Message :</strong></p>
+          <p style="white-space: pre-wrap;">${validated.message}</p>
+          <br />
+          <p style="font-size: 12px; color: #666;">ID Soumission: ${submission.id}</p>
+        </div>
+      `,
+    };
 
-    return { success: true, message: "Votre message a été envoyé avec succès !" };
+    await transporter.sendMail(mailOptions);
+
+    return { success: true };
   } catch (error) {
-    console.error("Contact Error:", error);
-    return { success: false, message: "Une erreur est survenue lors de l'envoi." };
+    console.error("Contact submission error:", error);
+    return { success: false, error: "Une erreur est survenue lors de l'envoi." };
   }
 }
