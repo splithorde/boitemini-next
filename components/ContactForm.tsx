@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useActionState, useEffect, useRef } from 'react';
+import { useActionState } from 'react';
 import { submitContactForm } from '@/app/actions/contact';
 
 const initialState = {
@@ -10,70 +10,67 @@ const initialState = {
 };
 
 export default function ContactForm() {
-  const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (state?.success) {
-      formRef.current?.reset();
-    }
-  }, [state]);
+  const [state, action, isPending] = useActionState(submitContactForm, initialState);
 
   return (
-    <form ref={formRef} action={formAction} className="space-y-6 bg-white p-8 rounded-lg shadow-sm border border-gray-100">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form action={action} className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Nom complet *</label>
+          <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Nom du client *</label>
           <input
             type="text"
             id="name"
             name="name"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
+            placeholder="Jean Dupont"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition"
           />
-          {state?.errors?.name && <p className="text-red-500 text-xs mt-1">{state.errors.name[0]}</p>}
+          {state?.errors?.name && <p className="text-red-500 text-xs mt-1">{state.errors.name}</p>}
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+          <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Mail du client *</label>
           <input
             type="email"
             id="email"
             name="email"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
+            placeholder="jean.dupont@example.com"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition"
           />
-          {state?.errors?.email && <p className="text-red-500 text-xs mt-1">{state.errors.email[0]}</p>}
+          {state?.errors?.email && <p className="text-red-500 text-xs mt-1">{state.errors.email}</p>}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+          <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">Téléphone</label>
           <input
             type="tel"
             id="phone"
             name="phone"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
+            placeholder="06 12 34 56 78"
           />
         </div>
         <div>
-          <label htmlFor="carBrandModel" className="block text-sm font-medium text-gray-700 mb-1">Marque et modèle</label>
+          <label htmlFor="carModel" className="block text-sm font-semibold text-gray-700 mb-2">Marque et modèle</label>
           <input
             type="text"
-            id="carBrandModel"
-            name="carBrandModel"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition"
+            id="carModel"
+            name="carModel"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
+            placeholder="Mini Cooper S"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <label htmlFor="fuel" className="block text-sm font-medium text-gray-700 mb-1">Type de carburant</label>
+          <label htmlFor="fuelType" className="block text-sm font-semibold text-gray-700 mb-2">Type de carburant</label>
           <select
-            id="fuel"
-            name="fuel"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition bg-white"
+            id="fuelType"
+            name="fuelType"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
           >
             <option value="">Sélectionner...</option>
             <option value="Essence">Essence</option>
@@ -83,41 +80,42 @@ export default function ContactForm() {
           </select>
         </div>
         <div>
-          <label htmlFor="registrationDate" className="block text-sm font-medium text-gray-700 mb-1">Mise en circulation</label>
+          <label htmlFor="regDate" className="block text-sm font-semibold text-gray-700 mb-2">Date de mise en circulation</label>
           <input
             type="date"
-            id="registrationDate"
-            name="registrationDate"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition"
+            id="regDate"
+            name="regDate"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
           />
         </div>
       </div>
 
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message *</label>
+      <div className="mb-6">
+        <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message libre *</label>
         <textarea
           id="message"
           name="message"
-          rows={5}
+          rows={4}
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brand-600 outline-none transition-all"
+          placeholder="Votre message..."
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none transition"
         ></textarea>
-        {state?.errors?.message && <p className="text-red-500 text-xs mt-1">{state.errors.message[0]}</p>}
+        {state?.errors?.message && <p className="text-red-500 text-xs mt-1">{state.errors.message}</p>}
       </div>
-
-      {state?.message && (
-        <div className={`p-4 rounded-md ${state.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-          {state.message}
-        </div>
-      )}
 
       <button
         type="submit"
         disabled={isPending}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md transition-colors disabled:opacity-50"
+        className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50"
       >
-        {isPending ? 'Envoi en cours...' : 'Envoyer mon message'}
+        {isPending ? 'Envoi en cours...' : 'Envoyer le message'}
       </button>
+
+      {state?.message && (
+        <p className={`mt-4 text-center text-sm font-medium ${state.success ? 'text-green-600' : 'text-red-600'}`}>
+          {state.message}
+        </p>
+      )}
     </form>
   );
 }
