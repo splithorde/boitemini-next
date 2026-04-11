@@ -1,50 +1,26 @@
+import React from 'react';
+
 export default function ContactInfo() {
   return (
-    <div className="space-y-10">
-      <div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Nos Coordonnées</h3>
-        <ul className="space-y-6">
-          <li className="flex items-start">
-            <div className="flex-shrink-0 w-10 h-10 bg-blue-50 flex items-center justify-center rounded-lg">
-              <span className="text-blue-600">📍</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500 uppercase">Adresse</p>
-              <p className="text-base text-gray-900 font-medium">25bis Rue Georges Bizet, 92000 Nanterre</p>
-            </div>
-          </li>
-          <li className="flex items-start">
-            <div className="flex-shrink-0 w-10 h-10 bg-blue-50 flex items-center justify-center rounded-lg">
-              <span className="text-blue-600">📞</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500 uppercase">Téléphone</p>
-              <p className="text-base text-gray-900 font-medium">01 47 24 10 10</p>
-            </div>
-          </li>
-          <li className="flex items-start">
-            <div className="flex-shrink-0 w-10 h-10 bg-blue-50 flex items-center justify-center rounded-lg">
-              <span className="text-blue-600">✉️</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500 uppercase">Email</p>
-              <p className="text-base text-gray-900 font-medium">contact@boitemini.fr</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      
-      <div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Horaires d'ouverture</h3>
-        <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 space-y-2">
-          <div className="flex justify-between">
-            <span className="text-gray-600">Lundi - Vendredi</span>
-            <span className="font-semibold text-gray-900">09:00 - 18:30</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Samedi</span>
-            <span className="font-semibold text-gray-900">10:00 - 17:00</span>
-          </div>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-blue-900">Nos coordonnées</h2>
+      <div className="space-y-4">
+        <div>
+          <p className="font-semibold text-gray-900">Adresse</p>
+          <p className="text-gray-600">123 Avenue de la République, 92000 Nanterre</p>
+        </div>
+        <div>
+          <p className="font-semibold text-gray-900">Téléphone</p>
+          <p className="text-gray-600">01 23 45 67 89</p>
+        </div>
+        <div>
+          <p className="font-semibold text-gray-900">Email</p>
+          <p className="text-gray-600">contact@garage-nanterre.fr</p>
+        </div>
+        <div>
+          <p className="font-semibold text-gray-900">Horaires</p>
+          <p className="text-gray-600">Lundi - Vendredi : 09h00 - 18h00</p>
+          <p className="text-gray-600">Samedi : 09h00 - 12h00</p>
         </div>
       </div>
     </div>
