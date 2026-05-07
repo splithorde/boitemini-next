@@ -10,11 +10,14 @@ export default function AdminDashboard() {
         </div>
       </header>
       <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white overflow-hidden shadow-sm rounded-lg">
-          <div className="p-6 text-gray-900">
-            <h2 className="text-xl font-semibold mb-4">Hello World</h2>
-            <p className="text-gray-600">
+        <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+          <div className="p-8 text-center">
+            <h2 className="text-4xl font-extrabold text-blue-600 mb-4">Hello World</h2>
+            <p className="text-lg text-gray-600">
               Bienvenue dans l'interface d'administration de BoiteMini.
+            </p>
+            <p className="mt-4 text-sm text-gray-400 italic">
+              Vous êtes connecté en tant qu'administrateur.
             </p>
           </div>
         </div>
