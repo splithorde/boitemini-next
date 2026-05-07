@@ -11,7 +11,7 @@ export async function loginAction(prevState: any, formData: FormData) {
   const validatedFields = loginSchema.safeParse(Object.fromEntries(formData));
 
   if (!validatedFields.success) {
-    return { error: "Identifiants invalides." };
+    return { error: "Veuillez remplir tous les champs." };
   }
 
   const { username, password } = validatedFields.data;
