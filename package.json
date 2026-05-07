@@ -16,7 +16,9 @@
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.22.4",
-    "@icons-pack/react-simple-icons": "latest"
+    "@icons-pack/react-simple-icons": "latest",
+    "bcryptjs": "latest",
+    "jose": "latest"
   },
   "devDependencies": {
     "@types/node": "^20",
