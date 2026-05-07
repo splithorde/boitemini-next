@@ -18,14 +18,11 @@ export const contactSchema = z.object({
 export const productSchema = z.object({
   name: z.string().min(2, "Le nom est requis"),
   stockQuantity: z.coerce.number().int().min(0, "La quantité ne peut pas être négative"),
-  costPrice: z.coerce.number().min(0, "Le prix d'achat ne peut pas être négatif"),
-  sellingPrice: z.coerce.number().min(0, "Le prix de vente ne peut pas être négatif"),
-  imageUrl: z.string().url("L'URL de l'image doit être valide (ex: https://...)"),
+  costPrice: z.coerce.number().positive("Le prix d'achat doit être strictement positif"),
+  sellingPrice: z.coerce.number().positive("Le prix de vente doit être strictement positif"),
+  imageUrl: z.string().url("L'URL de l'image doit être valide"),
   description: z.string().min(5, "La description est requise"),
   sectionId: z.string().min(1, "La section est obligatoire"),
-}).refine((data) => data.sellingPrice >= data.costPrice, {
-  message: "Le prix de vente doit être supérieur ou égal au prix d'achat",
-  path: ["sellingPrice"],
 });
 
 export const sectionSchema = z.object({
