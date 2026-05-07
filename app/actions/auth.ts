@@ -11,11 +11,10 @@ export async function loginAction(prevState: any, formData: FormData) {
   const validatedFields = loginSchema.safeParse(Object.fromEntries(formData));
 
   if (!validatedFields.success) {
-    return { error: "Champs invalides." };
+    return { error: "Identifiants invalides." };
   }
 
   const { username, password } = validatedFields.data;
-  let redirectTo = "";
 
   try {
     const user = await prisma.user.findUnique({
@@ -41,16 +40,12 @@ export async function loginAction(prevState: any, formData: FormData) {
       path: "/",
       maxAge: 60 * 60 * 2, // 2 hours
     });
-
-    redirectTo = "/admin";
   } catch (error) {
-    console.error("Login Error:", error);
+    console.error("Login error:", error);
     return { error: "Une erreur est survenue lors de la connexion." };
   }
 
-  if (redirectTo) {
-    redirect(redirectTo);
-  }
+  redirect("/admin");
 }
 
 export async function logoutAction() {
