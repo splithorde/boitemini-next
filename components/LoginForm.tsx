@@ -1,20 +1,16 @@
-'use client';
+"use client";
 
-import { useFormState, useFormStatus } from 'react-dom';
-import { loginAction } from '@/app/actions/auth';
-
-const initialState = {
-  error: null as string | null,
-};
+import { useFormState, useFormStatus } from "react-dom";
+import { loginAction } from "@/app/actions/auth";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
-  
+
   return (
     <button
       type="submit"
       disabled={pending}
-      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
     >
       {pending ? "Connexion en cours..." : "Se connecter"}
     </button>
@@ -22,12 +18,12 @@ function SubmitButton() {
 }
 
 export default function LoginForm() {
-  const [state, formAction] = useFormState(loginAction, initialState);
+  const [state, formAction] = useFormState(loginAction, null);
 
   return (
     <form action={formAction} className="space-y-6">
       {state?.error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm animate-pulse">
           {state.error}
         </div>
       )}
@@ -42,7 +38,7 @@ export default function LoginForm() {
             name="username"
             type="text"
             required
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-black"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-900"
           />
         </div>
       </div>
@@ -57,7 +53,7 @@ export default function LoginForm() {
             name="password"
             type="password"
             required
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-black"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-900"
           />
         </div>
       </div>
