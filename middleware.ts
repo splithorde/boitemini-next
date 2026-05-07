@@ -5,9 +5,7 @@ import { verifyToken } from './lib/auth';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only protect admin routes
   if (pathname.startsWith('/admin')) {
-    // Allow the login page itself
     if (pathname === '/admin/login') {
       return NextResponse.next();
     }
