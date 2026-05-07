@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { productSchema } from "@/lib/zod-schemas";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
 
 export async function getProducts(search?: string, sectionId?: string) {
   return await prisma.product.findMany({
@@ -22,7 +23,15 @@ export async function getProducts(search?: string, sectionId?: string) {
   });
 }
 
+export async function getProductById(id: string) {
+  return await prisma.product.findUnique({
+    where: { id },
+    include: { section: true }
+  });
+}
+
 export async function upsertProduct(data: z.infer<typeof productSchema> & { id?: string }) {
+  // Validation ensures sellingPrice >= costPrice and formatted imageUrl
   const validated = productSchema.parse(data);
 
   const payload = {
@@ -47,6 +56,7 @@ export async function upsertProduct(data: z.infer<typeof productSchema> & { id?:
   }
 
   revalidatePath('/admin/products');
+  revalidatePath('/services');
 }
 
 export async function deleteProduct(id: string) {
