@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useFormState, useFormStatus } from "react-dom";
-import { loginAction } from "@/app/actions/auth";
+import { useFormState, useFormStatus } from 'react-dom';
+import { loginAction } from '@/app/actions/auth';
 
 const initialState = {
-  error: "",
+  error: null as string | null,
 };
 
 function SubmitButton() {
   const { pending } = useFormStatus();
-
+  
   return (
     <button
       type="submit"
@@ -26,12 +26,15 @@ export default function LoginForm() {
 
   return (
     <form action={formAction} className="space-y-6">
+      {state?.error && (
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded text-sm">
+          {state.error}
+        </div>
+      )}
+      
       <div>
-        <label
-          htmlFor="username"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Identifiant
+        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+          Nom d'utilisateur
         </label>
         <div className="mt-1">
           <input
@@ -39,16 +42,13 @@ export default function LoginForm() {
             name="username"
             type="text"
             required
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-900"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-black"
           />
         </div>
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
           Mot de passe
         </label>
         <div className="mt-1">
@@ -57,20 +57,12 @@ export default function LoginForm() {
             name="password"
             type="password"
             required
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-gray-900"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-black"
           />
         </div>
       </div>
 
-      {state?.error && (
-        <div className="text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded">
-          {state.error}
-        </div>
-      )}
-
-      <div>
-        <SubmitButton />
-      </div>
+      <SubmitButton />
     </form>
   );
 }
