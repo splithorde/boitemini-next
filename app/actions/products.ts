@@ -5,6 +5,7 @@ import { productSchema } from "@/lib/zod-schemas";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
+import { verifySession } from "@/lib/auth";
 
 export async function getProducts(search?: string, sectionId?: string) {
   return await prisma.product.findMany({
@@ -23,15 +24,12 @@ export async function getProducts(search?: string, sectionId?: string) {
   });
 }
 
-export async function getProductById(id: string) {
-  return await prisma.product.findUnique({
-    where: { id },
-    include: { section: true }
-  });
-}
-
 export async function upsertProduct(data: z.infer<typeof productSchema> & { id?: string }) {
-  // Validation ensures sellingPrice >= costPrice and formatted imageUrl
+  const session = await verifySession();
+  if (!session) {
+    throw new Error("Non autorisé");
+  }
+
   const validated = productSchema.parse(data);
 
   const payload = {
@@ -56,10 +54,14 @@ export async function upsertProduct(data: z.infer<typeof productSchema> & { id?:
   }
 
   revalidatePath('/admin/products');
-  revalidatePath('/services');
 }
 
 export async function deleteProduct(id: string) {
+  const session = await verifySession();
+  if (!session) {
+    throw new Error("Non autorisé");
+  }
+
   await prisma.product.delete({
     where: { id }
   });
