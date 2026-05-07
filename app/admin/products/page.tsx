@@ -1,93 +1,43 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { Plus, Package } from "lucide-react";
 import { getProducts } from "@/app/actions/products";
-import { getSections } from "@/app/actions/sections";
 import ProductTable from "@/components/admin/ProductTable";
 import ProductFilters from "@/components/admin/ProductFilters";
-import ProductModal from "@/components/admin/ProductModal";
-import { Product, Section } from "@prisma/client";
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
-export default function AdminProductsPage() {
-  const searchParams = useSearchParams();
-  const [products, setProducts] = useState<any[]>([]);
-  const [sections, setSections] = useState<Section[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export default async function AdminProductsPage({
+  searchParams,
+}: {
+  searchParams: { q?: string; section?: string };
+}) {
+  const search = searchParams.q;
+  const sectionId = searchParams.section;
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    const search = searchParams.get("search") || undefined;
-    const section = searchParams.get("section") || undefined;
-
-    const [prods, secs] = await Promise.all([
-      getProducts(search, section),
-      getSections()
-    ]);
-
-    setProducts(prods);
-    setSections(secs);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [searchParams]);
-
-  const handleEdit = (product: Product) => {
-    setEditingProduct(product);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingProduct(null);
-    fetchData();
-  };
+  const [products, sections] = await Promise.all([
+    getProducts(search, sectionId),
+    prisma.section.findMany({ orderBy: { name: 'asc' } })
+  ]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div className="container mx-auto py-8 px-4">
+      <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Package className="w-8 h-8 text-blue-600" />
-            Gestion du Catalogue Produits
-          </h1>
-          <p className="text-gray-500 mt-1">
-            Gérez l'inventaire, les tarifs et les catégories de vos pièces détachées.
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900">Gestion du Catalogue</h1>
+          <p className="text-gray-600">Gérez l'inventaire des produits et les tarifs.</p>
         </div>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-200 transition-all active:scale-95"
+        <Link
+          href="/admin/products/new"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
         >
-          <Plus className="w-5 h-5" />
-          Nouveau Produit
-        </button>
+          Ajouter un produit
+        </Link>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
-        <ProductFilters sections={sections} />
-
-        {isLoading ? (
-          <div className="py-20 text-center">
-            <div className="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
-            <p className="text-gray-500">Chargement des produits...</p>
-          </div>
-        ) : (
-          <ProductTable products={products} onEdit={handleEdit} />
-        )}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="p-4 border-b border-gray-200 bg-gray-50">
+          <ProductFilters sections={sections} />
+        </div>
+        <ProductTable products={products} />
       </div>
-
-      <ProductModal 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
-        sections={sections}
-        initialData={editingProduct}
-      />
     </div>
   );
 }
