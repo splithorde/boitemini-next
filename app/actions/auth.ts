@@ -41,6 +41,7 @@ export async function loginAction(prevState: any, formData: FormData) {
       maxAge: 60 * 60 * 2, // 2 hours
     });
   } catch (error) {
+    console.error("Login error:", error);
     return { error: "Une erreur est survenue lors de la connexion." };
   }
 
