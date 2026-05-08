@@ -18,7 +18,8 @@
     "zod": "^3.22.4",
     "@icons-pack/react-simple-icons": "latest",
     "bcryptjs": "latest",
-    "jose": "latest"
+    "jose": "latest",
+    "lucide-react": "latest"
   },
   "devDependencies": {
     "@types/node": "^20",
