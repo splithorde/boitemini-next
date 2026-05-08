@@ -19,10 +19,7 @@
     "@icons-pack/react-simple-icons": "latest",
     "bcryptjs": "latest",
     "jose": "latest",
-    "lucide-react": "latest",
-    "@lib/zod-schemas": "latest",
-    "react-hook-form": "latest",
-    "@hookform/resolvers": "latest"
+    "lucide-react": "latest"
   },
   "devDependencies": {
     "@types/node": "^20",
