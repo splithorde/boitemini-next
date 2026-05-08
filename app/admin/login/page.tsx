@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import LoginForm from "@/components/LoginForm";
 
+// Force dynamic rendering to ensure Server Actions (POST requests) are handled correctly
+// in all environments, preventing 405 Method Not Allowed errors on static-optimized pages.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Connexion Admin | BoiteMini",
   robots: {
