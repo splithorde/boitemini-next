@@ -45,6 +45,7 @@ export async function loginAction(prevState: any, formData: FormData) {
     return { error: "Une erreur est survenue lors de la connexion." };
   }
 
+  // Redirection must be outside the try/catch block
   redirect("/admin");
 }
 
