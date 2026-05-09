@@ -19,7 +19,8 @@
     "@icons-pack/react-simple-icons": "latest",
     "bcryptjs": "latest",
     "jose": "latest",
-    "lucide-react": "latest"
+    "lucide-react": "latest",
+    "@lib/zod-schemas": "latest"
   },
   "devDependencies": {
     "@types/node": "^20",
