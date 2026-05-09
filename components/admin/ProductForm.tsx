@@ -1,154 +1,85 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { productSchema } from "@/lib/zod-schemas";
 import { upsertProduct } from "@/app/actions/products";
 import { Section } from "@prisma/client";
 
-interface ProductFormProps {
-  sections: Section[];
-  initialData?: any;
-}
-
-type ProductFormValues = z.infer<typeof productSchema>;
-
-export default function ProductForm({ sections, initialData }: ProductFormProps) {
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+export default function ProductForm({ sections, initialData, onSuccess }: { 
+  sections: Section[], 
+  initialData?: any, 
+  onSuccess: () => void 
+}) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProductFormValues>({
-    resolver: zodResolver(productSchema),
-    defaultValues: initialData || {
-      stockQuantity: 0,
-      costPrice: 0,
-      sellingPrice: 0,
-    },
-  });
-
-  const onSubmit = async (data: ProductFormValues) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
     setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
     try {
-      await upsertProduct({ ...data, id: initialData?.id });
-      router.push("/admin/products");
-      router.refresh();
+      await upsertProduct(data, initialData?.id);
+      onSuccess();
     } catch (err: any) {
-      setError(err.message || "Une erreur est survenue lors de l'enregistrement.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl bg-white p-6 rounded-lg shadow-sm">
-      {error && (
-        <div className="p-3 text-sm text-red-500 bg-red-50 border border-red-200 rounded">
-          {error}
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm">{error}</div>}
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Nom du produit</label>
+          <input name="name" defaultValue={initialData?.name} required className="w-full p-2 border rounded-lg" />
         </div>
-      )}
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Nom du produit</label>
-        <input
-          {...register("name")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-        />
-        {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>}
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Section</label>
+          <select name="sectionId" defaultValue={initialData?.sectionId} required className="w-full p-2 border rounded-lg">
+            <option value="">Choisir une section</option>
+            {sections.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+          </select>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Stock</label>
-          <input
-            type="number"
-            {...register("stockQuantity")}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-          />
-          {errors.stockQuantity && <p className="mt-1 text-xs text-red-500">{errors.stockQuantity.message}</p>}
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Stock</label>
+          <input name="stockQuantity" type="number" defaultValue={initialData?.stockQuantity || 0} required className="w-full p-2 border rounded-lg" />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Prix d'achat (€)</label>
-          <input
-            type="number"
-            step="0.01"
-            {...register("costPrice")}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-          />
-          {errors.costPrice && <p className="mt-1 text-xs text-red-500">{errors.costPrice.message}</p>}
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Prix Achat HT (€)</label>
+          <input name="costPrice" type="number" step="0.01" defaultValue={initialData?.costPrice || 0} required className="w-full p-2 border rounded-lg" />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Prix de vente (€)</label>
-          <input
-            type="number"
-            step="0.01"
-            {...register("sellingPrice")}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-          />
-          {errors.sellingPrice && <p className="mt-1 text-xs text-red-500">{errors.sellingPrice.message}</p>}
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Prix Vente HT (€)</label>
+          <input name="sellingPrice" type="number" step="0.01" defaultValue={initialData?.sellingPrice || 0} required className="w-full p-2 border rounded-lg" />
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Section / Catégorie</label>
-        <select
-          {...register("sectionId")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-        >
-          <option value="">Sélectionner une section</option>
-          {sections.map((section) => (
-            <option key={section.id} value={section.id}>
-              {section.name}
-            </option>
-          ))}
-        </select>
-        {errors.sectionId && <p className="mt-1 text-xs text-red-500">{errors.sectionId.message}</p>}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">URL de l'image</label>
+        <input name="imageUrl" type="url" defaultValue={initialData?.imageUrl} required className="w-full p-2 border rounded-lg" placeholder="https://..." />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700">URL de l'image</label>
-        <input
-          {...register("imageUrl")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-          placeholder="https://example.com/image.jpg"
-        />
-        {errors.imageUrl && <p className="mt-1 text-xs text-red-500">{errors.imageUrl.message}</p>}
+      <div className="space-y-1">
+        <label className="text-sm font-medium">Description</label>
+        <textarea name="description" defaultValue={initialData?.description} required className="w-full p-2 border rounded-lg h-24" />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Description</label>
-        <textarea
-          {...register("description")}
-          rows={4}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-        />
-        {errors.description && <p className="mt-1 text-xs text-red-500">{errors.description.message}</p>}
-      </div>
-
-      <div className="flex justify-end space-x-3 pt-4">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Annuler
-        </button>
-        <button
-          type="submit"
+      <div className="flex justify-end gap-3 pt-4">
+        <button 
+          type="submit" 
           disabled={loading}
-          className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
         >
-          {loading ? "Enregistrement..." : "Ajouter le produit"}
+          {loading ? "Enregistrement..." : "Enregistrer"}
         </button>
       </div>
     </form>
