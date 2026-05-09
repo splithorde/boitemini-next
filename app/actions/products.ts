@@ -3,14 +3,13 @@
 import { prisma } from "@/lib/prisma";
 import { productSchema } from "@/lib/zod-schemas";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@prisma/client";
 
 export async function getProducts(search?: string, sectionId?: string) {
   return await prisma.product.findMany({
     where: {
       AND: [
         search ? { name: { contains: search, mode: 'insensitive' } } : {},
-        sectionId && sectionId !== 'all' ? { sectionId } : {},
+        sectionId && sectionId !== "all" ? { sectionId: sectionId } : {}
       ]
     },
     include: {
@@ -22,22 +21,22 @@ export async function getProducts(search?: string, sectionId?: string) {
   });
 }
 
-export async function upsertProduct(data: z.infer<typeof productSchema> & { id?: string }) {
-  const validated = productSchema.parse(data);
+export async function upsertProduct(data: any, id?: string) {
+  const validated = productSchema.safeParse(data);
+  if (!validated.success) {
+    const errorMsg = validated.error.errors.map(e => e.message).join(", ");
+    throw new Error("Données invalides : " + errorMsg);
+  }
 
   const payload = {
-    name: validated.name,
-    stockQuantity: validated.stockQuantity,
-    costPrice: new Prisma.Decimal(validated.costPrice),
-    sellingPrice: new Prisma.Decimal(validated.sellingPrice),
-    imageUrl: validated.imageUrl,
-    description: validated.description,
-    sectionId: validated.sectionId,
+    ...validated.data,
+    costPrice: validated.data.costPrice,
+    sellingPrice: validated.data.sellingPrice,
   };
 
-  if (data.id) {
+  if (id) {
     await prisma.product.update({
-      where: { id: data.id },
+      where: { id },
       data: payload
     });
   } else {
@@ -46,12 +45,12 @@ export async function upsertProduct(data: z.infer<typeof productSchema> & { id?:
     });
   }
 
-  revalidatePath('/admin/products');
+  revalidatePath("/admin/products");
 }
 
 export async function deleteProduct(id: string) {
   await prisma.product.delete({
     where: { id }
   });
-  revalidatePath('/admin/products');
+  revalidatePath("/admin/products");
 }
