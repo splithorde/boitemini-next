@@ -2,51 +2,48 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Default sections for automotive parts
   const sections = [
-    'Pièces Moteur',
-    'Freinage',
-    'Suspension et Direction',
-    'Échappement',
-    'Électronique et Éclairage',
-    'Entretien et Vidange'
+    { name: 'Moteur' },
+    { name: 'Freinage' },
+    { name: 'Transmission' },
+    { name: 'Suspension' },
+    { name: 'Échappement' },
+    { name: 'Électricité' },
   ];
 
-  for (const name of sections) {
+  for (const section of sections) {
     await prisma.section.upsert({
-      where: { name },
+      where: { name: section.name },
       update: {},
-      create: { name }
+      create: section,
     });
   }
 
-  const motorSection = await prisma.section.findUnique({ where: { name: 'Pièces Moteur' } });
+  const motorSection = await prisma.section.findUnique({ where: { name: 'Moteur' } });
   const brakingSection = await prisma.section.findUnique({ where: { name: 'Freinage' } });
 
   if (motorSection && brakingSection) {
-    // Sample Products
-    await prisma.product.create({
-      data: {
-        name: 'Kit de Distribution',
-        description: 'Kit complet avec courroie et galets pour moteurs diesel.',
-        stockQuantity: 15,
-        costPrice: 85.00,
-        sellingPrice: 145.00,
-        imageUrl: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=400',
-        sectionId: motorSection.id
-      }
-    });
-
-    await prisma.product.create({
-      data: {
-        name: 'Plaquettes de Frein AV',
-        description: 'Plaquettes de frein haute performance pour train avant.',
-        stockQuantity: 24,
-        costPrice: 22.50,
-        sellingPrice: 48.90,
-        imageUrl: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=400',
-        sectionId: brakingSection.id
-      }
+    await prisma.product.createMany({
+      data: [
+        {
+          name: 'Kit de Distribution',
+          description: 'Kit complet avec pompe à eau pour moteurs HDI.',
+          stockQuantity: 15,
+          costPrice: 85.00,
+          sellingPrice: 149.99,
+          imageUrl: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=400',
+          sectionId: motorSection.id,
+        },
+        {
+          name: 'Plaquettes de Frein Avant',
+          description: 'Plaquettes haute performance pour freinage optimal.',
+          stockQuantity: 24,
+          costPrice: 22.50,
+          sellingPrice: 45.00,
+          imageUrl: 'https://images.unsplash.com/photo-1590528709020-9a83858079bc?auto=format&fit=crop&q=80&w=400',
+          sectionId: brakingSection.id,
+        }
+      ]
     });
   }
 }
