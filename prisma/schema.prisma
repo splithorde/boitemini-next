@@ -15,18 +15,6 @@ model User {
   createdAt DateTime @default(now())
 }
 
-model ContactSubmission {
-  id               String   @id @default(cuid())
-  name             String
-  email            String
-  phone            String?
-  brandModel       String?
-  fuelType         String?
-  registrationDate DateTime?
-  message          String
-  createdAt        DateTime @default(now())
-}
-
 model Section {
   id       String    @id @default(cuid())
   name     String    @unique
@@ -37,12 +25,24 @@ model Product {
   id            String   @id @default(cuid())
   name          String
   stockQuantity Int
-  costPrice     Decimal  @db.Decimal(10, 2)
-  sellingPrice  Decimal  @db.Decimal(10, 2)
+  costPrice     Decimal
+  sellingPrice  Decimal
   imageUrl      String
   description   String
   sectionId     String
   section       Section  @relation(fields: [sectionId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String?
+  brandModel       String?
+  fuelType         String?
+  registrationDate DateTime?
+  message          String
+  createdAt        DateTime @default(now())
 }
