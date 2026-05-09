@@ -3,11 +3,10 @@
 import { Edit2, Trash2, Package } from "lucide-react";
 import { deleteProduct } from "@/app/actions/products";
 import { Product, Section } from "@prisma/client";
-import Link from "next/link";
 
-type ProductWithSection = Product & { section: Section };
+type ProductWithSection = any;
 
-export default function ProductTable({ products }: { products: ProductWithSection[] }) {
+export default function ProductTable({ products, onEdit }: { products: ProductWithSection[], onEdit: (p: any) => void }) {
   const handleDelete = async (id: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
       try {
@@ -41,7 +40,7 @@ export default function ProductTable({ products }: { products: ProductWithSectio
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
-          {products.map((product) => (
+          {products.map((product: any) => (
             <tr key={product.id} className="hover:bg-gray-50 transition-colors group">
               <td className="px-6 py-4">
                 <div className="flex items-center gap-4">
@@ -69,12 +68,12 @@ export default function ProductTable({ products }: { products: ProductWithSectio
               <td className="px-6 py-4 text-right font-semibold text-gray-900">{Number(product.sellingPrice).toFixed(2)} €</td>
               <td className="px-6 py-4 text-right">
                 <div className="flex justify-end gap-2">
-                  <Link 
-                    href={`/admin/products/${product.id}/edit`} 
+                  <button 
+                    onClick={() => onEdit(product)} 
                     className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
                   >
                     <Edit2 className="w-4 h-4" />
-                  </Link>
+                  </button>
                   <button 
                     onClick={() => handleDelete(product.id)}
                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
