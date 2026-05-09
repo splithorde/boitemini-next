@@ -5,7 +5,7 @@ import { productSchema } from "@/lib/zod-schemas";
 import { revalidatePath } from "next/cache";
 
 export async function getProducts(search?: string, sectionId?: string) {
-  return await prisma.product.findMany({
+  const products = await prisma.product.findMany({
     where: {
       AND: [
         search ? { name: { contains: search, mode: 'insensitive' } } : {},
@@ -19,6 +19,13 @@ export async function getProducts(search?: string, sectionId?: string) {
       createdAt: 'desc'
     }
   });
+
+  // Convert Decimal to Number for serialization
+  return products.map(p => ({
+    ...p,
+    costPrice: Number(p.costPrice),
+    sellingPrice: Number(p.sellingPrice),
+  }));
 }
 
 export async function upsertProduct(data: any, id?: string) {
@@ -29,9 +36,13 @@ export async function upsertProduct(data: any, id?: string) {
   }
 
   const payload = {
-    ...validated.data,
+    name: validated.data.name,
+    stockQuantity: validated.data.stockQuantity,
     costPrice: validated.data.costPrice,
     sellingPrice: validated.data.sellingPrice,
+    imageUrl: validated.data.imageUrl,
+    description: validated.data.description,
+    sectionId: validated.data.sectionId,
   };
 
   if (id) {
